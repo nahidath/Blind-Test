@@ -3,36 +3,36 @@ import Homepage from "./Home/Homepage";
 import Themes from "./Themes/Themes";
 import Game from "./Game/Game";
 import EndGame from "./EndGame/EndGame";
-import {Route, Router, Switch, useHistory} from "react-router-dom";
-import {Button} from "react-bootstrap";
+import {Route, Router, Routes, useNavigate} from "react-router-dom";
+import {Button, Navbar} from "react-bootstrap";
 import {VscDebugRestart} from "react-icons/vsc";
+import NavBar from "./component/NavBar/NavBar";
 
 
 
 
 function App() {
-  const history = useHistory();
 
-  const goToHomePage = () => {
-    history.push({pathname : '/'})
-  }
+    const navigate = useNavigate();
+
+    const goToHomePage = () => {
+        navigate("/themes", {replace: true});
+    }
 
   return (
     <>
-    <div className="App">
-      <Router basename="/BlindTest">
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route path="/themes" component={Themes} exact />
-          <Route path="/themes/:themeId" component={Game} />
-          <Route path="/end" component={EndGame} />
-        </Switch>
-      </Router>
-    </div>
-    <div className="restart">
-      <Button onClick={goToHomePage}><VscDebugRestart/> Restart</Button>
-    </div>
-
+      <NavBar/>
+      <div className="App">
+        <Routes>
+          <Route path='/' element={<Homepage/>} />
+          <Route path="/themes" element={<Themes/>} exact />
+          <Route path="/themes/:themeId" element={<Game/>} />
+          <Route path="/end" element={<EndGame/>} />
+        </Routes>
+      </div>
+      <div className="restart">
+        <Button onClick={goToHomePage}><VscDebugRestart/> Restart</Button>
+      </div>
     </>
   );
 }

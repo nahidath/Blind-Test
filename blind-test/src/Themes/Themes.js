@@ -1,12 +1,10 @@
-import Card from 'react-bootstrap/Card';
 import themesAPI from "./themesAPI";
+import "./Themes.css";
+import {Col, Row, Card } from "react-bootstrap";
 
 
 export default function Themes (){
 
-    const handleThemeClick = (themeId) => {
-        this.props.history.push(this.props.location.pathname + '/' + themeId);
-    }
 
     return(
         <div className="theme-wrapper">
@@ -14,22 +12,23 @@ export default function Themes (){
                 Choose a theme :
             </div>
             <div className="theme-card">
-                {themesAPI.map(({ name, id, icon }) => (
-                    <Card
-                        key={id}
-                        bg="light"
-                        border="primary"
-                        onClick={this.handleThemeClick.bind(null, id)}
-                    >
-                        <Card.Body className="theme-display text-center">
-                            <span
-                                className="theme-icon"
-                                dangerouslySetInnerHTML={{ __html: icon }}
-                            />
-                        </Card.Body>
-                        <Card.Footer className="text-center">id</Card.Footer>
-                    </Card>
-                ))}
+                    {themesAPI.map((elt, index) => (
+                        <Row key={index} xs={1} md={2} className="g-4">
+                            <Col xs={1} md={4}>
+                                <Card
+                                    key={elt.id}
+                                    // onClick={this.handleThemeClick.bind(null, id)}
+                                >
+                                    <Card.Body>
+                                        <span
+                                            dangerouslySetInnerHTML={{ __html: elt.icon }}
+                                        />
+                                    </Card.Body>
+                                    <Card.Footer>{elt.id}</Card.Footer>
+                                </Card>
+                            </Col>
+                        </Row>
+                    ))}
             </div>
         </div>
     )
