@@ -5,27 +5,27 @@ import {Col, Row, Card } from "react-bootstrap";
 
 export default function Themes (){
 
+    const handleThemeClick = (themeId) => {
+        this.props.history.push(this.props.location.pathname + '/' + themeId);
+    }
 
     return(
         <div className="theme-wrapper">
-            <div className="title">
+            <h3 className="title">
                 Choose a theme :
-            </div>
+            </h3>
             <div className="theme-card">
                     {themesAPI.map((elt, index) => (
                         <Row key={index} xs={1} md={2} className="g-4">
                             <Col xs={1} md={4}>
                                 <Card
                                     key={elt.id}
-                                    // onClick={this.handleThemeClick.bind(null, id)}
+                                    onClick={() => handleThemeClick(elt.id)}
+                                    className="card-theme"
                                 >
-                                    <Card.Body>
-                                        <span
-                                            dangerouslySetInnerHTML={{ __html: elt.icon }}
-                                        />
-                                    </Card.Body>
-                                    <Card.Footer>{elt.id}</Card.Footer>
+                                    <Card.Img variant="top" src={elt.icon} />
                                 </Card>
+                                <h6 className="theme-title">{elt.name}</h6>
                             </Col>
                         </Row>
                     ))}

@@ -5,14 +5,44 @@
     justify-content: center;
 }
 
+.title{
+    margin-top: -55px;
+    padding-bottom: 20px;
+}
+
 .theme-card{
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    gap : 10px 20px;
+    gap : 50px 50px;
+    width: 50%;
 }
 
-.theme-card .card{
-    width: 130px;
-    height: 150px;
+.card-theme{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    cursor: pointer;
+    transition: transform .2s; /* Animation */
+}
+
+.theme-card .card-img-top{
+    width: 90px;
+    height: 90px;
+}
+
+.theme-title{
+    margin-top: 15px;
+    margin-bottom : -33px;
+    font-size : 15px;
+    display:none;
+    color : black;
+}
+
+.card-theme:hover{
+    transform: scale(1.2);
+}
+
+.card-theme:hover + .theme-title{
+    display: block;
 }
