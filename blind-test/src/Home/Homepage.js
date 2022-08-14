@@ -1,6 +1,7 @@
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import {Button} from "react-bootstrap";
 import {usenavigate, useNavigate} from "react-router-dom";
+import "./Homepage.css";
 
 
 export default function Homepage(){
@@ -16,10 +17,10 @@ export default function Homepage(){
             {/*    <img src="/logo.png" alt="Logo" />*/}
             {/*</div>*/}
             <div className="gameTitle">
-                Blind Test
+                Blind Test, le game le plus fun  de toutes les soirées
             </div>
-            <Button onClick={goToThemes}><BsFillPlayCircleFill className="playGame"/></Button>
-            <h5>Let's start !!</h5>
+            <BsFillPlayCircleFill size={120} onClick={goToThemes} className="playGame"/>
+            <h4 className="start-msg">Let's start !!</h4>
         </div>
     )
 
