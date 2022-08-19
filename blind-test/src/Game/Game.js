@@ -40,14 +40,13 @@ export default function Game(){
         setTrack(apiRes[randomTrackIndex].preview);
     }
 
-    // http://cdn-preview-9.deezer.com/stream/c-99bd12f1f1e14dfb4cdcda123fa5541f-3.mp3
 
     return(
         <div className="game-wrapper">
             <h5>Theme : {findThemeID.name}</h5>
             <div className="timer"></div>
             <div className="player">
-                {/*<AudioCmp/>*/}
+                <AudioComponent srcMusic={track}/>
             </div>
             <div className="answer">
                 <Form>
