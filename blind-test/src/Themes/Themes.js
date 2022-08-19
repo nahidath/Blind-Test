@@ -1,12 +1,15 @@
 import themesAPI from "./themesAPI";
 import "./Themes.css";
 import {Col, Row, Card } from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 
 export default function Themes (){
 
+    const navigate = useNavigate();
+
     const handleThemeClick = (themeId) => {
-        this.props.history.push(this.props.location.pathname + '/' + themeId);
+        navigate("/themes/"+ themeId, {replace: true});
     }
 
     return(
