@@ -1,5 +1,7 @@
+import "./AudioPlayer.css";
 
-export default function  AudioComponent(srcMusic){
+
+export default function  AudioPlayer(srcMusic){
 
     return(
         <audio controls className='userAudio'>
