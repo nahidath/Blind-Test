@@ -1,0 +1,20 @@
+.answer span{
+    font-style: italic;
+    color:grey;
+    font-size: 12px;
+}
+
+.answer .form-control{
+    margin-top: 15px;
+    height : 35px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #281754;
+    width : 250px;
+
+}
+
+/*.player{*/
+/*    width: 436px;*/
+/*    margin-left: 380px;*/
+/*}*/
