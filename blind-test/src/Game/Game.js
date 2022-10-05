@@ -97,6 +97,7 @@ export default function Game(){
                 <SpectrumVisualizer
                     audio={track}
                     theme={SpectrumVisualizerTheme.roundBars}
+                    colors={['#7303c0']}
                 />
             </div>
             <div className="answer">
