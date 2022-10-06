@@ -23,7 +23,7 @@
     height: 100px;
     background-color: white;
     cursor: pointer;
-    transition: transform .2s; /* Animation */
+    transition: transform .3s ease-in; /* Animation */
 }
 
 .theme-card .card-img-top{
@@ -35,8 +35,8 @@
     margin-top: 15px;
     margin-bottom : -33px;
     font-size : 15px;
-    display:none;
     color : black;
+    opacity : 0;
 }
 
 .card-theme:hover{
@@ -44,5 +44,6 @@
 }
 
 .card-theme:hover + .theme-title{
-    display: block;
+    opacity : 1;
+    transition: 0.3s ease-in;
 }

@@ -79,6 +79,7 @@ export default function Game(){
                 {/*<canvas id="audioVisual" height="500" width="500"></canvas>*/}
                 <SpectrumVisualizer
                     audio={track}
+                    autoPlay={true}
                     theme={SpectrumVisualizerTheme.squaredBars}
                     colors={['#7303c0']}
                     highFrequency={8000}
