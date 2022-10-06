@@ -3,8 +3,9 @@ import themesAPI from "../Themes/themesAPI";
 import {useEffect, useRef, useState} from "react";
 import apiRes from "./apiRes";
 import "./Game.css";
-import {Wave} from "@foobar404/wave";
+// import AudioSpectrum from "react-audio-spectrum/lib/AudioSpectrum";
 import { SpectrumVisualizer, SpectrumVisualizerTheme } from 'react-audio-visualizers';
+
 
 export default function Game(){
     const pathArray = window.location.pathname.split('/');
@@ -12,49 +13,15 @@ export default function Game(){
     const findThemeID = themesAPI.find(t => t.id === getThemeID);
     // const playlist = apiRes;
     const [track, setTrack] = useState("");
-    let canvasRef = useRef(null);
-    // let audioElement = document.getElementById("source");
-    // let audioCtx = new AudioContext();
-    // let analyser = audioCtx.createAnalyser();
-    // analyser.fftSize = 2048;
-    // let source = audioCtx.createMediaElementSource(audioElement);
-    // source.connect(audioCtx.destination);
-    // let data = new Uint8Array(analyser.frequencyBinCount);
-    let ctx;
-    let canvas;
-    // let wave;
+    let audioEle = new Audio(track);
+
 
     useEffect(() => {
         // getPlayist();
         getRandomSong();
-        // let audioElement = document.getElementById("source");
-        // let canvasElement = document.getElementById("audioVisual");
-        // let wave = new Wave(audioElement, canvasElement);
-        // wave.addAnimation(new wave.animations.Wave({
-        //     lineWidth: 10,
-        //     lineColor: "red",
-        //     count: 20
-        // }));
     }, []);
 
 
-
-   //  const draw = (data) =>{
-   //      data = [...data];
-   //      ctx.clearRect(0,0,canvas.width,canvas.height);
-   //      let space = canvas.width / data.length;
-   //      data.forEach((value,i)=>{
-   //          ctx.beginPath();
-   //          ctx.moveTo(space*i,canvas.height); //x,y
-   //          ctx.lineTo(space*i,canvas.height-value); //x,y
-   //          ctx.stroke();
-   //      })
-   //  }
-   // const loopingFunction = () =>{
-   //      requestAnimationFrame(loopingFunction);
-   //      analyser.getByteFrequencyData(data);
-   //      draw(data);
-   //  }
     // const getPlayist = () => {
     //     let url = findThemeID.url;
     //     console.log(url);
@@ -87,17 +54,35 @@ export default function Game(){
                 {/*<audio*/}
                 {/*    controls*/}
                 {/*    // className='userAudio'*/}
-                {/*    id="source"*/}
+                {/*    id="audio-element"*/}
                 {/*    autoPlay={true}*/}
                 {/*    src={track}*/}
                 {/*>*/}
-                {/*    /!*<source  type="audio/mp3" src={track} ></source>*!/*/}
                 {/*</audio>*/}
+                {/*<AudioSpectrum*/}
+                {/*    id="audio-canvas"*/}
+                {/*    height={200}*/}
+                {/*    width={300}*/}
+                {/*    audioEle={audioEle}*/}
+                {/*    // audioId={'audio-element'}*/}
+                {/*    capColor={'red'}*/}
+                {/*    capHeight={2}*/}
+                {/*    meterWidth={2}*/}
+                {/*    meterCount={512}*/}
+                {/*    meterColor={[*/}
+                {/*        {stop: 0, color: '#f00'},*/}
+                {/*        {stop: 0.5, color: '#0CD7FD'},*/}
+                {/*        {stop: 1, color: 'red'}*/}
+                {/*    ]}*/}
+                {/*    gap={4}*/}
+                {/*/>*/}
                 {/*<canvas id="audioVisual" height="500" width="500"></canvas>*/}
                 <SpectrumVisualizer
                     audio={track}
-                    theme={SpectrumVisualizerTheme.roundBars}
+                    theme={SpectrumVisualizerTheme.squaredBars}
                     colors={['#7303c0']}
+                    highFrequency={8000}
+                    barWidth={8}
                 />
             </div>
             <div className="answer">

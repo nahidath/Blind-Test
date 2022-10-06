@@ -19,7 +19,9 @@ export default function Homepage(){
             <div className="gameTitle">
                 Blind Test, le game le plus fun  de toutes les soirées
             </div>
-            <BsFillPlayCircleFill size={120} onClick={goToThemes} className="playGame"/>
+            <div className="iconBackground">
+                <BsFillPlayCircleFill color={"#990db9"} size={120} onClick={goToThemes} className="playGame"/>
+            </div>
             <h4 className="start-msg">Let's start !!</h4>
         </div>
     )
