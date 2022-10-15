@@ -20,6 +20,17 @@
 /*}*/
 
 .player .css-tg9irj div{
-    width: 27% !important;
+    /*width: 27% !important;*/
     margin-left: 435px;
+}
+
+#mainActionContainer{
+    position: absolute;
+    bottom: 150px;
+    left : 46%;
+    z-index:100;
+    cursor: pointer !important;
+}
+.css-52oi9o{
+    display: none;
 }

@@ -15,8 +15,6 @@
     "material-ui-player": "^1.0.10",
     "mui-audio-player": "^1.0.1",
     "react": "^18.2.0",
-    "react-audio-spectrum": "^0.1.0",
-    "react-audio-spectrum2": "^0.1.8",
     "react-audio-visualizers": "^0.1.1",
     "react-av": "^0.2.0",
     "react-bootstrap": "^2.5.0",
@@ -25,6 +23,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "router": "^1.3.7",
+    "vue-audio-spectrum": "^0.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -5,6 +5,8 @@ import apiRes from "./apiRes";
 import "./Game.css";
 // import AudioSpectrum from "react-audio-spectrum/lib/AudioSpectrum";
 import { SpectrumVisualizer, SpectrumVisualizerTheme } from 'react-audio-visualizers';
+import AudioSpectrum from "react-av";
+import {FaPlayCircle} from "react-icons/fa";
 
 
 export default function Game(){
@@ -13,7 +15,15 @@ export default function Game(){
     const findThemeID = themesAPI.find(t => t.id === getThemeID);
     // const playlist = apiRes;
     const [track, setTrack] = useState("");
+    const [trackTimer, setTrackTimer] = useState(0);
     let audioEle = new Audio(track);
+    const audioTimer = audioEle.duration;
+    console.log(audioTimer);
+    const [trackDuration, setTrackDuration] = useState(0);
+    // audioEle.play().then(r => console.log("playing"));
+    // audioEle.autoplay=true;
+
+    // console.log(audioEle.load());
 
 
     useEffect(() => {
@@ -41,21 +51,32 @@ export default function Game(){
         setTrack(apiRes[randomTrackIndex].preview);
     }
 
-    // const playerButton = document.querySelector('.player-button');
-    // const audio = document.querySelector('audio');
+    const noDisplaying = () => {
+        const button = document.getElementById('mainActionContainer');
+        button.style.display = 'none';
 
+        const timer = document.getElementById('countdownContainer');
+        setTrackDuration(audioTimer);
+        // setTrackTimer(Math.ceil(30-trackDuration));
+    }
+
+
+    const mainActionRender = ({ play}) => ({
+        id: 'mainActionContainer',
+        node: <FaPlayCircle size={100} onClick={play}/>,
+    });
 
     return(
         <div className="game-wrapper">
             <h5>Theme : {findThemeID.name}</h5>
             <div className="timer"></div>
             <div className="player">
-                {/*<FaPlayCircle className="player-button"/>*/}
+                {/*<FaPlayCircle id="player-button" onClick={noDisplaying}/>*/}
                 {/*<audio*/}
                 {/*    controls*/}
                 {/*    // className='userAudio'*/}
                 {/*    id="audio-element"*/}
-                {/*    autoPlay={true}*/}
+                {/*    // autoPlay={true}*/}
                 {/*    src={track}*/}
                 {/*>*/}
                 {/*</audio>*/}
@@ -63,8 +84,8 @@ export default function Game(){
                 {/*    id="audio-canvas"*/}
                 {/*    height={200}*/}
                 {/*    width={300}*/}
-                {/*    audioEle={audioEle}*/}
-                {/*    // audioId={'audio-element'}*/}
+                {/*    // audioEle={audioEle}*/}
+                {/*    audioId={'audio-element'}*/}
                 {/*    capColor={'red'}*/}
                 {/*    capHeight={2}*/}
                 {/*    meterWidth={2}*/}
@@ -78,13 +99,23 @@ export default function Game(){
                 {/*/>*/}
                 {/*<canvas id="audioVisual" height="500" width="500"></canvas>*/}
                 <SpectrumVisualizer
-                    audio={track}
-                    autoPlay={true}
-                    theme={SpectrumVisualizerTheme.squaredBars}
+                    id="visu"
+                    audio={audioEle.src}
+                    // autoPlay={true}
+                    iconsColor="#26a69a"
+                    backgroundColor="white"
+                    // showMainActionIcon
+                    mainActionRender={mainActionRender}
+                    theme={SpectrumVisualizerTheme.radialSquaredBars}
                     colors={['#7303c0']}
                     highFrequency={8000}
-                    barWidth={8}
+                    barWidth={2}
+                    radius={70}
+                    numBars={60}
+
                 />
+                <div id="mainActionContainer" onClick={noDisplaying}></div>
+                <div id="countdownContainer">{trackDuration}</div>
             </div>
             <div className="answer">
                 <Form>
