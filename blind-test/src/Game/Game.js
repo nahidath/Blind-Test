@@ -1,12 +1,12 @@
 import {Form} from "react-bootstrap";
 import themesAPI from "../Themes/themesAPI";
-import {useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import apiRes from "./apiRes";
 import "./Game.css";
 // import AudioSpectrum from "react-audio-spectrum/lib/AudioSpectrum";
 import { SpectrumVisualizer, SpectrumVisualizerTheme } from 'react-audio-visualizers';
 import AudioSpectrum from "react-av";
-import {FaPlayCircle} from "react-icons/fa";
+import {IoMusicalNotes} from "react-icons/io5";
 
 
 export default function Game(){
@@ -15,21 +15,27 @@ export default function Game(){
     const findThemeID = themesAPI.find(t => t.id === getThemeID);
     // const playlist = apiRes;
     const [track, setTrack] = useState("");
-    const [trackTimer, setTrackTimer] = useState(0);
+    // const [trackTimer, setTrackTimer] = useState(0);
     let audioEle = new Audio(track);
     const audioTimer = audioEle.duration;
-    console.log(audioTimer);
-    const [trackDuration, setTrackDuration] = useState(0);
-    // audioEle.play().then(r => console.log("playing"));
-    // audioEle.autoplay=true;
+    const [trackTimer, setTrackTimer] = useState(audioEle.currentTime);
+    const [trackDuration, setTrackDuration] = useState(30);
+    const [playing, setPlaying] = useState(false);
+    const [tractTitle, setTractTitle] = useState("");
+    const [artist, setArtist] = useState("");
+    const [randomNames, setRandomNames] = useState({});
 
-    // console.log(audioEle.load());
 
 
     useEffect(() => {
         // getPlayist();
         getRandomSong();
     }, []);
+    useEffect(() => {
+      if(playing && trackDuration > 0 ){
+          setTimeout(() => setTrackDuration(trackDuration - 1), 1000);
+      }
+    }, [trackDuration, playing]);
 
 
     // const getPlayist = () => {
@@ -44,31 +50,44 @@ export default function Game(){
     // }
 
 
+
     const getRandomSong = () => {
         const randomTrackIndex = Math.floor(
             Math.random() * apiRes.length
         );
         setTrack(apiRes[randomTrackIndex].preview);
+        setArtist(apiRes[randomTrackIndex].artist.name);
+        setTractTitle(apiRes[randomTrackIndex].title_short);
+    }
+
+    const getRandomArtists = () =>{
+        const arrayRnd = [];
+        const randomNumber = Math.floor(Math.random() * apiRes.length);
+        for(let i=0; i<randomNumber; i++){
+            arrayRnd.push(apiRes[i].artist.name);
+        }
     }
 
     const noDisplaying = () => {
+        setPlaying(true);
         const button = document.getElementById('mainActionContainer');
         button.style.display = 'none';
+        const spectrum = document.getElementsByClassName('css-tg9irj');
+        spectrum[0].style.visibility = 'visible';
 
         const timer = document.getElementById('countdownContainer');
-        setTrackDuration(audioTimer);
-        // setTrackTimer(Math.ceil(30-trackDuration));
+        timer.style.visibility = 'visible';
     }
 
 
     const mainActionRender = ({ play}) => ({
         id: 'mainActionContainer',
-        node: <FaPlayCircle size={100} onClick={play}/>,
+        node: <IoMusicalNotes size={150} color={'#281754'} onClick={play}/>,
     });
 
     return(
         <div className="game-wrapper">
-            <h5>Theme : {findThemeID.name}</h5>
+            <h5>Thème : {findThemeID.name}</h5>
             <div className="timer"></div>
             <div className="player">
                 {/*<FaPlayCircle id="player-button" onClick={noDisplaying}/>*/}
@@ -103,7 +122,7 @@ export default function Game(){
                     audio={audioEle.src}
                     // autoPlay={true}
                     iconsColor="#26a69a"
-                    backgroundColor="white"
+                    // backgroundColor="white"
                     // showMainActionIcon
                     mainActionRender={mainActionRender}
                     theme={SpectrumVisualizerTheme.radialSquaredBars}
@@ -118,10 +137,21 @@ export default function Game(){
                 <div id="countdownContainer">{trackDuration}</div>
             </div>
             <div className="answer">
-                <Form>
-                    <Form.Control type="text" placeholder="Your answer" />
-                </Form>
-                <span>Press enter to submit</span>
+                <div className="grid-card-answer">
+                    <input type="radio" id="answer" value={tractTitle}/>
+                    <label for="answer">{artist}</label>
+                    {Array.from({length: 3}).map((_,idx) => (
+                        <>
+                            <input type="radio" id="answer" value={tractTitle}/>
+                            <label htmlFor="answer">{artist}</label>
+                        </>
+
+                    ))}
+                </div>
+                {/*<Form>*/}
+                {/*    <Form.Control type="text" placeholder="Your answer" />*/}
+                {/*</Form>*/}
+                {/*<span>Press enter to submit</span>*/}
             </div>
         </div>
     )

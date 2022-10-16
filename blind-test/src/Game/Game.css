@@ -5,7 +5,7 @@
 }
 
 .answer .form-control{
-    margin-top: 15px;
+    /*margin-top: -15px;*/
     height : 35px;
     border-radius: 10px;
     text-align: center;
@@ -14,23 +14,65 @@
 
 }
 
-/*.player{*/
-/*    width: 436px;*/
-/*    margin-left: 380px;*/
-/*}*/
-
-.player .css-tg9irj div{
-    /*width: 27% !important;*/
-    margin-left: 435px;
+.game-wrapper h5{
+    margin-top: -50px;
+    font-size : 25px;
+    font-family: Helvetica, sans-serif;
+    font-weight : normal;
+    color: #281754;
 }
+
+.player{
+    height: 233px;
+}
+
+/*.player .css-tg9irj div{*/
+/*    !*width: 27% !important;*!*/
+/*    margin-left: 435px;*/
+/*}*/
 
 #mainActionContainer{
     position: absolute;
     bottom: 150px;
-    left : 46%;
+    left : 43%;
     z-index:100;
     cursor: pointer !important;
+    border-radius: 50%;
+    border: 1px solid #281754;
+    width: 170px;
+    height: 170px;
+    display: flex;
+    align-items: center;
+    /*transition: transform .3s ease-in; !* Animation *!*/
 }
+
+#mainActionContainer svg{
+    margin-left: 3px;
+}
+/*#mainActionContainer:hover{*/
+/*    transform: scale(1.2);*/
+/*}*/
 .css-52oi9o{
     display: none;
+}
+
+.css-tg9irj{
+    margin-top: -47px;
+    visibility: hidden;
+}
+
+#countdownContainer{
+    position: absolute;
+    bottom: 150px;
+    left : 47.5%;
+    z-index:100;
+    cursor: pointer !important;
+    width: 170px;
+    height: 170px;
+    display: flex;
+    align-items: center;
+    font-size: 60px;
+    top: 47.5%;
+    visibility: hidden;
+    color : #7303c0;
 }
