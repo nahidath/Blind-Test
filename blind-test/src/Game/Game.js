@@ -23,13 +23,14 @@ export default function Game(){
     const [playing, setPlaying] = useState(false);
     const [tractTitle, setTractTitle] = useState("");
     const [artist, setArtist] = useState("");
-    const [randomNames, setRandomNames] = useState({});
+    const [randomNames, setRandomNames] = useState([]);
 
 
 
     useEffect(() => {
         // getPlayist();
         getRandomSong();
+        getRandomArtists();
     }, []);
     useEffect(() => {
       if(playing && trackDuration > 0 ){
@@ -60,12 +61,17 @@ export default function Game(){
         setTractTitle(apiRes[randomTrackIndex].title_short);
     }
 
+
     const getRandomArtists = () =>{
         const arrayRnd = [];
-        const randomNumber = Math.floor(Math.random() * apiRes.length);
-        for(let i=0; i<randomNumber; i++){
-            arrayRnd.push(apiRes[i].artist.name);
+        while (arrayRnd.length < 3){
+            const randomNumber = Math.floor(Math.random() * apiRes.length);
+            if(!arrayRnd.includes(apiRes[randomNumber].artist.name)){
+                arrayRnd.push(apiRes[randomNumber].artist.name);
+            }
         }
+        setRandomNames(randomNames => [...randomNames, arrayRnd]);
+
     }
 
     const noDisplaying = () => {
@@ -140,10 +146,10 @@ export default function Game(){
                 <div className="grid-card-answer">
                     <input type="radio" id="answer" value={tractTitle}/>
                     <label for="answer">{artist}</label>
-                    {Array.from({length: 3}).map((_,idx) => (
+                    {randomNames[0].map((val,idx) => (
                         <>
-                            <input type="radio" id="answer" value={tractTitle}/>
-                            <label htmlFor="answer">{artist}</label>
+                            <input type="radio" id="answer" key={idx} value={val}/>
+                            <label htmlFor="answer">{val}</label>
                         </>
 
                     ))}
