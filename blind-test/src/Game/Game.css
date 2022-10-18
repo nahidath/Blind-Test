@@ -76,3 +76,9 @@
     visibility: hidden;
     color : #7303c0;
 }
+
+#score{
+    position: absolute;
+    bottom: 40%;
+    left: 35%;
+}

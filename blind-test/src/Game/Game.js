@@ -13,17 +13,14 @@ export default function Game(){
     const pathArray = window.location.pathname.split('/');
     const getThemeID = pathArray[2];
     const findThemeID = themesAPI.find(t => t.id === getThemeID);
-    // const playlist = apiRes;
     const [track, setTrack] = useState("");
-    // const [trackTimer, setTrackTimer] = useState(0);
-    let audioEle = new Audio(track);
-    const audioTimer = audioEle.duration;
-    const [trackTimer, setTrackTimer] = useState(audioEle.currentTime);
     const [trackDuration, setTrackDuration] = useState(30);
     const [playing, setPlaying] = useState(false);
     const [tractTitle, setTractTitle] = useState("");
     const [artist, setArtist] = useState("");
     const [randomNames, setRandomNames] = useState([]);
+    const [answer, setAnswer] = useState("");
+    const [score, setScore] = useState(0);
 
 
 
@@ -63,14 +60,14 @@ export default function Game(){
 
 
     const getRandomArtists = () =>{
-        const arrayRnd = [];
+        const arrayRnd = [...randomNames];
         while (arrayRnd.length < 3){
             const randomNumber = Math.floor(Math.random() * apiRes.length);
-            if(!arrayRnd.includes(apiRes[randomNumber].artist.name)){
+            if(!arrayRnd.includes(apiRes[randomNumber].artist.name) && apiRes[randomNumber].artist.name!=artist){
                 arrayRnd.push(apiRes[randomNumber].artist.name);
             }
         }
-        setRandomNames(randomNames => [...randomNames, arrayRnd]);
+        setRandomNames(arrayRnd);
 
     }
 
@@ -85,6 +82,13 @@ export default function Game(){
         timer.style.visibility = 'visible';
     }
 
+    const subAnswer = () => {
+        if(answer == artist){
+            setScore(score+1);
+            getRandomSong();
+        }
+    }
+
 
     const mainActionRender = ({ play}) => ({
         id: 'mainActionContainer',
@@ -96,40 +100,10 @@ export default function Game(){
             <h5>Thème : {findThemeID.name}</h5>
             <div className="timer"></div>
             <div className="player">
-                {/*<FaPlayCircle id="player-button" onClick={noDisplaying}/>*/}
-                {/*<audio*/}
-                {/*    controls*/}
-                {/*    // className='userAudio'*/}
-                {/*    id="audio-element"*/}
-                {/*    // autoPlay={true}*/}
-                {/*    src={track}*/}
-                {/*>*/}
-                {/*</audio>*/}
-                {/*<AudioSpectrum*/}
-                {/*    id="audio-canvas"*/}
-                {/*    height={200}*/}
-                {/*    width={300}*/}
-                {/*    // audioEle={audioEle}*/}
-                {/*    audioId={'audio-element'}*/}
-                {/*    capColor={'red'}*/}
-                {/*    capHeight={2}*/}
-                {/*    meterWidth={2}*/}
-                {/*    meterCount={512}*/}
-                {/*    meterColor={[*/}
-                {/*        {stop: 0, color: '#f00'},*/}
-                {/*        {stop: 0.5, color: '#0CD7FD'},*/}
-                {/*        {stop: 1, color: 'red'}*/}
-                {/*    ]}*/}
-                {/*    gap={4}*/}
-                {/*/>*/}
-                {/*<canvas id="audioVisual" height="500" width="500"></canvas>*/}
                 <SpectrumVisualizer
                     id="visu"
-                    audio={audioEle.src}
-                    // autoPlay={true}
+                    audio={track}
                     iconsColor="#26a69a"
-                    // backgroundColor="white"
-                    // showMainActionIcon
                     mainActionRender={mainActionRender}
                     theme={SpectrumVisualizerTheme.radialSquaredBars}
                     colors={['#7303c0']}
@@ -141,19 +115,22 @@ export default function Game(){
                 />
                 <div id="mainActionContainer" onClick={noDisplaying}></div>
                 <div id="countdownContainer">{trackDuration}</div>
+                <div id="score">Score :<br/>{score}</div>
             </div>
             <div className="answer">
                 <div className="grid-card-answer">
-                    <input type="radio" id="answer" value={tractTitle}/>
-                    <label for="answer">{artist}</label>
-                    {randomNames[0].map((val,idx) => (
+                    <input type="radio" id="answer" value={artist} onChange={(e) => setAnswer(e.target.value)}/>
+                    <label htmlFor="answer">{artist}</label>
+                    {randomNames.map((val, idx) => (
                         <>
-                            <input type="radio" id="answer" key={idx} value={val}/>
+                            <input type="radio" id="answer" key={idx} value={val} onChange={(e) => setAnswer(e.target.value)}/>
                             <label htmlFor="answer">{val}</label>
                         </>
 
                     ))}
                 </div>
+                <button type="submit" className="btn-answer" onClick={subAnswer}>Valider</button>
+
                 {/*<Form>*/}
                 {/*    <Form.Control type="text" placeholder="Your answer" />*/}
                 {/*</Form>*/}
