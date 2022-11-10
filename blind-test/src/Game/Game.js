@@ -7,6 +7,7 @@ import "./Game.css";
 import { SpectrumVisualizer, SpectrumVisualizerTheme } from 'react-audio-visualizers';
 import AudioSpectrum from "react-av";
 import {IoMusicalNotes} from "react-icons/io5";
+import SpectrumVisu from "../component/SpectrumVisualizer/SpectrumVisu";
 
 
 export default function Game(){
@@ -21,6 +22,8 @@ export default function Game(){
     const [randomNames, setRandomNames] = useState([]);
     const [answer, setAnswer] = useState("");
     const [score, setScore] = useState(0);
+    const [started, setStarted] = useState(false);
+
 
 
 
@@ -34,6 +37,16 @@ export default function Game(){
           setTimeout(() => setTrackDuration(trackDuration - 1), 1000);
       }
     }, [trackDuration, playing]);
+
+    useEffect(() => {
+        if(playing){
+            const spectrum = document.getElementsByClassName('css-tg9irj');
+            spectrum[0].style.visibility = 'visible';
+            const buttonPlay =  document.getElementById('mainActionContainer');
+            buttonPlay.click();
+            console.log('click');
+        }
+    }, [ playing]);
 
 
     // const getPlayist = () => {
@@ -54,6 +67,7 @@ export default function Game(){
             Math.random() * apiRes.length
         );
         setTrack(apiRes[randomTrackIndex].preview);
+        console.log(track);
         setArtist(apiRes[randomTrackIndex].artist.name);
         setTractTitle(apiRes[randomTrackIndex].title_short);
     }
@@ -73,47 +87,75 @@ export default function Game(){
 
     const noDisplaying = () => {
         setPlaying(true);
-        const button = document.getElementById('mainActionContainer');
-        button.style.display = 'none';
-        const spectrum = document.getElementsByClassName('css-tg9irj');
-        spectrum[0].style.visibility = 'visible';
+        // setStarted(true);
+        // const button = document.getElementById('mainActionContainer');
+        // button.style.display = 'none';
+        // const spectrum = document.getElementsByClassName('css-tg9irj');
+        // spectrum[0].style.visibility = 'visible';
 
         const timer = document.getElementById('countdownContainer');
         timer.style.visibility = 'visible';
     }
 
+
     const subAnswer = () => {
         if(answer == artist){
+            setPlaying(false);
+            const audio = document.getElementsByClassName("audio-visu");
+            audio.style.display='none';
             setScore(score+1);
             getRandomSong();
+
         }
     }
 
-
-    const mainActionRender = ({ play}) => ({
+    const mainActionRender = ({ play, pause}) => ({
         id: 'mainActionContainer',
         node: <IoMusicalNotes size={150} color={'#281754'} onClick={play}/>,
     });
+    // const gameStart = () => {
+    //     return (
+    //         <SpectrumVisualizer
+    //             id="visu"
+    //             audio={track}
+    //             iconsColor="#26a69a"
+    //             mainActionRender={mainActionRender}
+    //             theme={SpectrumVisualizerTheme.radialSquaredBars}
+    //             colors={['#7303c0']}
+    //             highFrequency={8000}
+    //             barWidth={2}
+    //             radius={70}
+    //             numBars={60}
+    //             onChange={(e) => console.log(e)}
+    //         />
+    //     )
+    // }
 
     return(
         <div className="game-wrapper">
             <h5>Thème : {findThemeID.name}</h5>
             <div className="timer"></div>
             <div className="player">
-                <SpectrumVisualizer
-                    id="visu"
-                    audio={track}
-                    iconsColor="#26a69a"
-                    mainActionRender={mainActionRender}
-                    theme={SpectrumVisualizerTheme.radialSquaredBars}
-                    colors={['#7303c0']}
-                    highFrequency={8000}
-                    barWidth={2}
-                    radius={70}
-                    numBars={60}
+                {/*{(started) ? <><SpectrumVisu trackSCR={track}/></>:<div id="mainActionContainer" onClick={noDisplaying}></div> }*/}
+                {
+                    (playing) ?
+                        <SpectrumVisualizer
+                            id="visu"
+                            audio={track}
+                            iconsColor="#26a69a"
+                            mainActionRender={mainActionRender}
+                            theme={SpectrumVisualizerTheme.radialSquaredBars}
+                            colors={['#7303c0']}
+                            highFrequency={8000}
+                            barWidth={2}
+                            radius={70}
+                            numBars={60}
+                            onChange={(e) => console.log(e)}
+                        /> :  <></>
+                        // <div id="mainActionContainer" onClick={noDisplaying}/>
+                }
 
-                />
-                <div id="mainActionContainer" onClick={noDisplaying}></div>
+                <div id="mainActionContainer" onClick={noDisplaying}/>
                 <div id="countdownContainer">{trackDuration}</div>
                 <div id="score">Score :<br/>{score}</div>
             </div>
