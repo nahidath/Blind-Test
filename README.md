@@ -1,5 +1,5 @@
-# Quiz-React
-A simple quiz app made with ReactJS and Deezer API. It a work in progress. PAUSED.
+# Blind Test
+A simple blind test made with ReactJS and Deezer API. It a work in progress. PAUSED.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
