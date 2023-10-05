@@ -66,6 +66,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-### Deployment
+## Screenshots
+
+![Capture d'écran 2023-10-05 034916](https://github.com/nahidath/Blind-Test/assets/36660735/d7878556-a377-44bd-ad4e-09d7cd7d749f)
+
+![Capture d'écran 2023-10-05 103649](https://github.com/nahidath/Blind-Test/assets/36660735/299427ea-33a5-42ec-8204-1d359ae728a6)
+
+
+## Deployment
 
 The project is actually deployed on Vercel. You can find it [here](https://quiz-react-mu-liart.vercel.app/).
